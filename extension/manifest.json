@@ -1,0 +1,72 @@
+{
+  "manifest_version": 3,
+  "name": "TERRA - Carbon Footprint Tracker",
+  "version": "1.0",
+  "description": "Track your carbon footprint passively while shopping online",
+  "permissions": [
+    "storage",
+    "scripting",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://www.amazon.com/*",
+    "https://www.bestbuy.com/*",
+    "https://www.walmart.com/*",
+    "https://www.target.com/*",
+    "https://www.ebay.com/*",
+    "https://www.booking.com/*",
+    "https://www.expedia.com/*",
+    "https://www.kayak.com/*",
+    "https://www.ubereats.com/*",
+    "https://www.doordash.com/*",
+    "https://www.grubhub.com/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.amazon.com/*",
+        "https://www.bestbuy.com/*",
+        "https://www.walmart.com/*",
+        "https://www.target.com/*",
+        "https://www.ebay.com/*"
+      ],
+      "js": ["content-ecommerce.js"],
+      "css": ["content-styles.css"]
+    },
+    {
+      "matches": [
+        "https://www.booking.com/*",
+        "https://www.expedia.com/*",
+        "https://www.kayak.com/*"
+      ],
+      "js": ["content-flights.js"],
+      "css": ["content-styles.css"]
+    },
+    {
+      "matches": [
+        "https://www.ubereats.com/*",
+        "https://www.doordash.com/*",
+        "https://www.grubhub.com/*"
+      ],
+      "js": ["content-food.js"],
+      "css": ["content-styles.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "TERRA Carbon Tracker",
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  }
+}

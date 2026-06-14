@@ -1,0 +1,28 @@
+.terra-carbon-chip,
+.terra-flight-chip,
+.terra-food-chip {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.terra-carbon-chip:hover,
+.terra-flight-chip:hover,
+.terra-food-chip:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.terra-carbon-chip {
+  transition: all 0.2s ease-in-out;
+}
+
+.terra-flight-chip {
+  transition: all 0.2s ease-in-out;
+}
+
+.terra-food-chip {
+  transition: all 0.2s ease-in-out;
+}

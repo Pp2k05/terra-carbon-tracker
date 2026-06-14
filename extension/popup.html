@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TERRA - Carbon Tracker</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 350px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        color: #1f2937;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        color: white;
+        padding: 16px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+
+      .header p {
+        font-size: 12px;
+        opacity: 0.9;
+      }
+
+      .content {
+        padding: 16px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: #22c55e;
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        font-size: 11px;
+        color: #6b7280;
+      }
+
+      .queue-section {
+        background: white;
+        border-radius: 8px;
+        padding: 12px;
+        border: 1px solid #e5e7eb;
+        margin-bottom: 12px;
+      }
+
+      .queue-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .queue-count {
+        background: #22c55e;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .queue-items {
+        max-height: 120px;
+        overflow-y: auto;
+      }
+
+      .queue-item {
+        font-size: 11px;
+        padding: 6px 0;
+        border-bottom: 1px solid #f3f4f6;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .queue-item:last-child {
+        border-bottom: none;
+      }
+
+      .queue-item-name {
+        flex: 1;
+        color: #374151;
+      }
+
+      .queue-item-co2 {
+        color: #22c55e;
+        font-weight: 600;
+        margin-left: 8px;
+      }
+
+      .buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      button {
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+      }
+
+      .btn-secondary {
+        background: white;
+        color: #22c55e;
+        border: 1px solid #22c55e;
+      }
+
+      .btn-secondary:hover {
+        background: #f3f4f6;
+      }
+
+      .footer {
+        padding: 12px 16px;
+        font-size: 10px;
+        color: #6b7280;
+        text-align: center;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .footer a {
+        color: #22c55e;
+        text-decoration: none;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 20px 16px;
+        color: #6b7280;
+      }
+
+      .empty-state p {
+        font-size: 12px;
+        margin-bottom: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🌱 TERRA</h1>
+      <p>Carbon Footprint Tracker</p>
+    </div>
+
+    <div class="content">
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-value" id="totalCO2">0</div>
+          <div class="stat-label">kg CO₂ Tracked</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="queueCount">0</div>
+          <div class="stat-label">Items Queued</div>
+        </div>
+      </div>
+
+      <!-- Queue -->
+      <div class="queue-section">
+        <div class="queue-title">
+          <span>Detected Items</span>
+          <span class="queue-count" id="badgeCount">0</span>
+        </div>
+        <div id="queueEmpty" class="empty-state" style="display: none">
+          <p>No items detected yet</p>
+          <p>Browse e-commerce, flight, or food delivery sites to see carbon emissions</p>
+        </div>
+        <div id="queueItems" class="queue-items"></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="buttons">
+        <button class="btn-primary" id="syncBtn">Sync to Dashboard</button>
+        <button class="btn-secondary" id="openDashboard">Open TERRA</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        Data syncs to your <a href="#" id="dashboardLink">TERRA Dashboard</a>
+      </p>
+      <p>Every tracked item helps you reduce your carbon footprint</p>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
