@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@ai-sdk/deepinfra": "^2.0.54",
@@ -32,9 +35,14 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "postcss": "^8.5",
     "tailwindcss": "^4.2.0",
     "typescript": "5.7.3"
